@@ -1,0 +1,34 @@
+1Q. Find all the information about each products
+Ans: db.products.find()
+
+2Q. Find the product price which are between 400 to 800
+Ans: db.products.find({product_price:{"$gte":400,"$lte":800}})
+
+3Q. Find the product price which are not between 400 to 600
+Ans: db.products.find({product_price:{"$not":{"$gte":400,"$lte":800}}})
+
+4Q. List the four product which are grater than 500 in price
+Ans: db.products.find({product_price:{"$gte":500}})
+
+5Q. Find the product name and product material of each products
+Ans: db.product_name:1, product_material:1})
+
+6Q. Find the product with a row id of 10
+Ans: db.products.find({id:"10"})
+
+7Q. Find only the product name and product material
+Ans: db.products.find({}, { product_name: 1, product_material: 1})
+
+8Q. Find all products which contain the value of soft in product material
+Ans: db.products.find({product_material:'Soft'})
+
+9Q<a>. Find products which contain product color indigo and product price 492.00 To find the product_color " indigo
+Ans: db.products.find({ product_color: "indigo" })
+9Q<b>. To find the product_price "492.00"
+
+Ans: db.products.find({product_price: 492 })
+
+10Q. Delete the products which product price value are same
+Ans: db.products.aggregate([{ $group: { _id: "$product_price", count: { $count: {} } } },{ $match: { _id: { $ne: null }, count: { $gt: 1 } } }]);
+After that the result is [36,47] so will be deleting them from the database using below command
+db.products.deleteMany({ product_price: { $in: [36, 47] } });
